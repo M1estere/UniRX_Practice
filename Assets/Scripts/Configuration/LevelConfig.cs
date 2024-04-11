@@ -8,4 +8,7 @@ public class LevelConfig : ScriptableObject
     
     [field: SerializeField] public int CoinsAmount { get; private set; }
     [field: SerializeField] public int LivesAmount { get; private set; }
+    
+    [field: SerializeField] public int MinEnemies { get; private set; }
+    [field: SerializeField] public int MaxEnemies { get; private set; }
 }

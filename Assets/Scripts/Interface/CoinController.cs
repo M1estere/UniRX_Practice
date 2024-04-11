@@ -11,5 +11,5 @@ public class CoinController : MonoBehaviour
         _coinImage.fillAmount = 0;
     }
 
-    public void EnableCoin() => _coinImage.DOFillAmount(1, .5f);
+    public void EnableCoin() => _coinImage.DOFillAmount(1, .5f).SetUpdate(true);
 }

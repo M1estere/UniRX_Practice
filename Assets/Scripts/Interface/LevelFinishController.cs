@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelFinishController : MonoBehaviour
 {
@@ -9,5 +10,17 @@ public class LevelFinishController : MonoBehaviour
     {
         (completed ? _completionScreen : _gameOverScreen).SetActive(true);
         Time.timeScale = 0;
+    }
+
+    public void RestartLevel()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void OpenMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 }

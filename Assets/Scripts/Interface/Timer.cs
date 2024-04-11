@@ -10,6 +10,8 @@ public class Timer : MonoBehaviour
     private int _currentTime;
 
     private LevelController _levelController;
+
+    private IDisposable _timer;
     
     private void Awake()
     {
@@ -23,13 +25,18 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        Observable.Timer(TimeSpan.FromSeconds(15)).Subscribe(delegate(long l)
+        _timer = Observable.Timer(TimeSpan.FromSeconds(_startTime)).Subscribe(delegate(long l)
         {
-            // TO-DO: Display Game Over
+            FindObjectOfType<LevelFinishController>().DisplayGameOver(false);
             print("Time's up");
         });
 
         var stream = Observable.EveryUpdate();
         stream.Sample(TimeSpan.FromSeconds(1)).Subscribe(time => _timerText.SetText((_startTime - ++_currentTime).ToString("00")));
+    }
+
+    private void OnDisable()
+    {
+        _timer.Dispose();
     }
 }

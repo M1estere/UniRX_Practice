@@ -40,8 +40,7 @@ public class HeartDisplay : MonoBehaviour
         _lives.Value--;
         if (_lives.Value <= 0)
         {
-            // TO-DO: Game Over call
-            print("Game Over");
+            FindObjectOfType<LevelFinishController>().DisplayGameOver(false);
         }
     }
 }

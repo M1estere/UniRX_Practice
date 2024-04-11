@@ -9,20 +9,34 @@ public class CoinDisplay : MonoBehaviour
 
     private LevelController _levelController;
 
-    private ReactiveProperty<int> _coinsAmount;
+    private int _coinsAmount = 0;
     private List<CoinController> _coins;
+
+    private ReactiveCommand<int> _increaseCoins;
     
     private void Awake()
     {
         _coins = new();
         _levelController = FindObjectOfType<LevelController>();
 
-        _coinsAmount = new(0);
+        _increaseCoins = new ReactiveCommand<int>();
+        _increaseCoins.Subscribe(delegate(int i)
+        {
+            _coinsAmount += i;
+            _coins[_coinsAmount - 1].EnableCoin();
+
+            if (_coinsAmount >= _coins.Count)
+            {
+                FindObjectOfType<LevelFinishController>().DisplayGameOver(true);
+            }
+        });
+
+        /*_coinsAmount = new(0);
         _coinsAmount.Skip(1).Subscribe(delegate(int i)
         {
             _coins[i - 1].EnableCoin();
             print($"You now have {i} coins");
-        });
+        });*/
     }
 
     private void Start()
@@ -37,12 +51,6 @@ public class CoinDisplay : MonoBehaviour
 
     public void TakeCoin()
     {
-        _coinsAmount.Value++;
-
-        if (_coinsAmount.Value >= _coins.Count)
-        {
-            // TO-DO: Level Completion
-            print("You've won!");
-        }
+        _increaseCoins.Execute(1);
     }
 }

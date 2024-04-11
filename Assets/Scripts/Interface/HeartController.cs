@@ -11,5 +11,5 @@ public class HeartController : MonoBehaviour
         _heartImage.fillAmount = 1;
     }
     
-    public void DisableHeart() => _heartImage.DOFillAmount(0, .5f);
+    public void DisableHeart() => _heartImage.DOFillAmount(0, .5f).SetUpdate(true);
 }
